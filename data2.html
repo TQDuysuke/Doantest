@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sensor 2</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3csstemplate.css">
+<link rel="icon" href="1024px-Logo_Dai_hoc_Can_Tho.svg.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="cssfile.css">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script> 
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <img class="w3-padding-64" style="width: 150px;position: relative; margin-left: 35px;margin-right: auto;" src="1024px-Logo_Dai_hoc_Can_Tho.svg.png"> </img>
+  <div class="w3-bar-block">
+    <a href="index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sensor value</a> 
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Can Tho University</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<!-- !PAGE CONTENT! -->
+
+<div class="w3-main" style="margin-left:400px;margin-right:40px">
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:0px" id="showcase">
+    <form>
+    <script type="text/javascript">
+       setInterval(function(){
+    readThingSpeakData(), writeThingSpeakData(),checkMotor()
+        },2000);
+    </script>
+
+    <div class="h2"> 
+      <h2 >Sensor 2 value</h2>
+    </div>
+    <div>
+      <canvas id="chartSensor2" width="100%" height="50%"></canvas>
+    </div>
+ 
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+//
+function readThingSpeakData()
+    {
+        var request = new XMLHttpRequest();
+        var urlHere = "https://api.thingspeak.com/channels/1747473/feeds.json";
+        request.open('GET', urlHere, true);
+        request.onload = function() {
+            if (request.status == 200) {
+                var data = JSON.parse(request.responseText);
+                console.log(data);
+                var length = data.feeds.length;  //kich thuoc du lieu
+                //loc bo cac phan tu null
+                sensor1 = new Array();
+                sensor2 = new Array();
+                sensor3 = new Array();
+                for(i=0;i<length;i++){
+                  sensor1.push(data.feeds[i].field1);
+                  sensor2.push(data.feeds[i].field2);
+                  sensor3.push(data.feeds[i].field3);
+                }
+                //Ve bieu đồ nhập xuất
+                var xTime = new Array();
+                for(var i=0;i<length;i++){
+                    xTime.push(data.feeds[i].created_at);
+                }
+                //bieu đồ
+                new Chart("chartSensor1", {
+                    type: "line",
+                    data: {
+                        labels: xTime,
+                        datasets: [
+                        {
+                            fill: false,
+                            backgroundColor: "red",
+                            borderColor: "red",
+                            label: "Sensor 1",
+                            data: sensor1
+                        }, 
+                        ]
+                    },
+                });
+                new Chart("chartSensor2", {
+                    type: "line",
+                    data: {
+                        labels: xTime,
+                        datasets: [
+                        {
+                            fill: false,
+                            backgroundColor: "black",
+                            borderColor: "blue",
+                            label: "Sensor 2",
+                            data: sensor2
+                        }, 
+                        ]
+                    },
+                });
+                new Chart("chartSensor3", {
+                    type: "line",
+                    data: {
+                        labels: xTime,
+                        datasets: [
+                        {
+                            fill: false,
+                            backgroundColor: "red",
+                            borderColor: "pink",
+                            label: "Sensor 3",
+                            data: sensor3
+                        }, 
+                        ]
+                    },
+                });
+            } else {
+            // We reached our target server, but it returned an error
+            }
+        };
+        request.send();
+    }
+
+    function writeThingSpeakData(dat)
+    {
+        var request = new XMLHttpRequest();
+        var urlHere = "https://api.thingspeak.com/update?";
+        urlHere = urlHere + "api_key=H7J4ITKRIWXW99OZ&field1="+ dat;
+        request.open('GET', urlHere, true);
+        request.send(); 
+    }
+
+    function checkMotor()
+    {
+        var request = new XMLHttpRequest();
+        var urlHere = "https://api.thingspeak.com/channels/1747106/fields/1.json?results=1";
+        request.open('GET', urlHere, true);
+        request.onload = function() {
+            if (request.status == 200) {
+                var data = JSON.parse(request.responseText);
+                //console.log(data);
+                motorStaus = data.feeds[0].field1;
+            }
+        };
+        request.send();
+    }
+    function showmotor(){
+     var status = document.getElementById("motorStaus").Value;
+        if (motorStaus == "1" ) {
+          alert("motor on")
+        }
+        else {
+          alert("motor off")
+        }
+    }
+
+</script>
+
+</body>
+</html>
