@@ -19,7 +19,7 @@ body {font-size:16px;}
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script> 
 </head>
-<body>
+<body onload="checkMotor(), readThingSpeakData(), writeThingSpeakData()">
 
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
@@ -49,7 +49,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <script type="text/javascript">
        setInterval(function(){
     readThingSpeakData(), writeThingSpeakData(),checkMotor()
-        },2000);
+        },180000);
 
     </script>
 

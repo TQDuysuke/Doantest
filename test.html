@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sensor 1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3csstemplate.css">
+<link rel="icon" href="1024px-Logo_Dai_hoc_Can_Tho.svg.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="cssfile.css">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif;
+                    color: blue;
+                    }
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script> 
+</head>
+<body onload="checkMotor()">
+<h1>test</h1>
+    <script type="text/javascript">
+       setInterval(function(){
+        writeThingSpeakData()   
+        },6000);
+    </script>
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+    function writeThingSpeakData()
+    {
+        var request = new XMLHttpRequest();
+        urlHere = "https://api.thingspeak.com/update?api_key=H7J4ITKRIWXW99OZ&field1=0";
+        request.open('GET', urlHere, true);
+        console.log(urlHere);
+        request.send(); 
+    }
+
+    function checkMotor()
+    {
+        var request = new XMLHttpRequest();
+       
+        var urlHere = "https://api.thingspeak.com/channels/1747106/fields/1.json?results=1";
+        request.open('GET', urlHere, true);
+        request.onload = function() {
+            if (request.status == 200) {
+                var data = JSON.parse(request.responseText);
+                // console.log(data);
+                motorStaus = parseInt(data.feeds[0].field1);
+                console.log(motorStaus);
+                if (motorStaus == 1) {
+                console.log("on")
+
+                }
+                else {
+                   console.log("off")
+                }
+            }
+        };
+        request.send();
+    }
+
+</script>
+
+</body>
+</html>

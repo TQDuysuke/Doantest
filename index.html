@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <a href="data2.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sensor 2</a> 
     <a href="data3.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sensor 3</a> 
     <a href="data4.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">AVG chart</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Value table download</a>
+    <a href="#contact" onclick="downloadVal()" class="w3-bar-item w3-button w3-hover-white">Value table download</a>
   </div>
 </nav>
 
@@ -51,16 +52,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   <!-- Header -->
   <div class="w3-container" style="margin-top:0px" id="showcase">
     <form>
-    <script type="text/javascript">
-       setInterval(function(){
-    readThingSpeakData(), writeThingSpeakData(),checkMotor()
-        },2000);
-    </script>
   <div class="w3-main" style="margin-left:400px;margin-right:40px">
     <div class="h2"> 
       <h1 >HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN MỰC NƯỚC MẶT TRÊN RUỘNG LÚA</h1>
+      <button onclick="readThingSpeakData()"> Trạng thái máy bơm</button>
     </div>
-
     </form>
     <div class="h2"> 
       <h2 >All sensor value</h2>
@@ -93,7 +89,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <div class="h2"> 
       <h2 style="margin-right:40px;margin-top:70px">Value detail</h2>
     </div>
-
    </div>
   
   <!-- Contact -->
@@ -159,115 +154,11 @@ function download() {
   open("https://thingspeak.com/channels/1747473/feed.csv")
 }
 //
-function readThingSpeakData()
+    function checkmotor()
     {
-        var request = new XMLHttpRequest();
-        var urlHere = "https://api.thingspeak.com/channels/1747473/feeds.json";
-        request.open('GET', urlHere, true);
-        request.onload = function() {
-            if (request.status == 200) {
-                var data = JSON.parse(request.responseText);
-                console.log(data);
-                var length = data.feeds.length;  //kich thuoc du lieu
-                //loc bo cac phan tu null
-                sensor1 = new Array();
-                sensor2 = new Array();
-                sensor3 = new Array();
-                for(i=0;i<length;i++){
-                  sensor1.push(data.feeds[i].field1);
-                  sensor2.push(data.feeds[i].field2);
-                  sensor3.push(data.feeds[i].field3);
-                }
-                //Ve bieu đồ nhập xuất
-                var xTime = new Array();
-                for(var i=0;i<length;i++){
-                    xTime.push(data.feeds[i].created_at);
-                }
-                //bieu đồ
-                new Chart("chartSensor1", {
-                    type: "line",
-                    data: {
-                        labels: xTime,
-                        datasets: [
-                        {
-                            fill: false,
-                            backgroundColor: "red",
-                            borderColor: "red",
-                            label: "Sensor 1",
-                            data: sensor1
-                        }, 
-                        ]
-                    },
-                });
-                new Chart("chartSensor2", {
-                    type: "line",
-                    data: {
-                        labels: xTime,
-                        datasets: [
-                        {
-                            fill: false,
-                            backgroundColor: "black",
-                            borderColor: "blue",
-                            label: "Sensor 2",
-                            data: sensor2
-                        }, 
-                        ]
-                    },
-                });
-                new Chart("chartSensor3", {
-                    type: "line",
-                    data: {
-                        labels: xTime,
-                        datasets: [
-                        {
-                            fill: false,
-                            backgroundColor: "red",
-                            borderColor: "pink",
-                            label: "Sensor 3",
-                            data: sensor3
-                        }, 
-                        ]
-                    },
-                });
-            } else {
-            // We reached our target server, but it returned an error
-            }
-        };
-        request.send();
-    }
+                alert("Still runing")
 
-    function writeThingSpeakData(dat)
-    {
-        var request = new XMLHttpRequest();
-        var urlHere = "https://api.thingspeak.com/update?";
-        urlHere = urlHere + "api_key=H7J4ITKRIWXW99OZ&field1="+ dat;
-        request.open('GET', urlHere, true);
-        request.send(); 
-    }
-
-    function checkMotor()
-    {
-        var request = new XMLHttpRequest();
-        var urlHere = "https://api.thingspeak.com/channels/1747106/fields/1.json?results=1";
-        request.open('GET', urlHere, true);
-        request.onload = function() {
-            if (request.status == 200) {
-                var data = JSON.parse(request.responseText);
-                //console.log(data);
-                motorStaus = data.feeds[0].field1;
-            }
-        };
-        request.send();
-    }
-    function showmotor(){
-     var status = document.getElementById("motorStaus").Value;
-        if (staus == "1" ) {
-          alert("motor on")
-        }
-        else {
-          alert("motor off")
-        }
-    }
+}
 
 </script>
 
