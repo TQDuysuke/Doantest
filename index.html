@@ -22,7 +22,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script> 
 </head>
 <body>
-
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
@@ -48,14 +47,20 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 <!-- !PAGE CONTENT! -->
 
-
+<script type="text/javascript">
+       setInterval(function(){
+    readThingSpeakData(), writeThingSpeakData()
+        },180000);
+    setInterval(function(){
+        checkMotor()},3000);
+      
+</script>
   <!-- Header -->
   <div class="w3-container" style="margin-top:0px" id="showcase">
     <form>
   <div class="w3-main" style="margin-left:400px;margin-right:40px">
     <div class="h2"> 
       <h1 >HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN MỰC NƯỚC MẶT TRÊN RUỘNG LÚA</h1>
-      <button onclick="readThingSpeakData()"> Trạng thái máy bơm</button>
     </div>
     </form>
     <div class="h2"> 
@@ -87,7 +92,21 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   <!-- Services -->
   <div class="w3-main" style="margin-left:400px;margin-right:40px" id="services" >
     <div class="h2"> 
-      <h2 style="margin-right:40px;margin-top:70px">Value detail</h2>
+      <h2 style="margin-right:40px;margin-top:70px">Pump status</h2>
+    </div>
+    <div class="pumpimg" style="margin-left:400px ;">
+      <img id="img" src="pumoff.png" alt=""></img>
+    </div>
+<script>
+  function changeimgon(){
+    var imgs = ["pumoff.png","pumpon.png"];
+    document.getElementById('img').src = imgs[1];
+  }
+  function changeimgoff(){
+    var imgs = ["pumpon.png","pumoff.png"];
+    document.getElementById('img').src = imgs[1];
+  }
+</script>
     </div>
    </div>
   
@@ -154,11 +173,28 @@ function download() {
   open("https://thingspeak.com/channels/1747473/feed.csv")
 }
 //
-    function checkmotor()
-    {
-                alert("Still runing")
-
-}
+function checkMotor()
+    {   var request = new XMLHttpRequest();
+        var urlHere = "https://api.thingspeak.com/channels/1747106/fields/1.json?results=2";
+        request.open('GET', urlHere, true);
+        request.onload = function() {
+            if (request.status == 200) {
+                var data = JSON.parse(request.responseText);
+                // console.log(data);
+                motorStaus = parseInt(data.feeds[0].field1);
+                console.log(motorStaus);
+                if (motorStaus == 1) {
+                console.log("on")
+                changeimgon();
+                }
+                else {
+                changeimgoff();
+                console.log("off")
+                }
+            }
+        };
+        request.send();
+    }
 
 </script>
 

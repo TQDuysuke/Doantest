@@ -48,8 +48,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <form>
     <script type="text/javascript">
        setInterval(function(){
-    readThingSpeakData(), writeThingSpeakData(),checkMotor()
+    readThingSpeakData(), writeThingSpeakData()
         },180000);
+    setInterval(function(){
+        checkMotor()},1000);
+      
     </script>
 
     <div class="h2"> 
@@ -169,7 +172,7 @@ function readThingSpeakData()
     function checkMotor()
     {
         var request = new XMLHttpRequest();
-        var urlHere = "https://api.thingspeak.com/channels/1747106/fields/1.json?results=1";
+        var urlHere = "https://api.thingspeak.com/channels/1747473/fields/5.json?results=1";
         request.open('GET', urlHere, true);
         request.onload = function() {
             if (request.status == 200) {
