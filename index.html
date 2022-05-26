@@ -69,11 +69,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
       <iframe width="450" height="260" style="border: 3px solid #cccccc;" src="https://thingspeak.com/channels/1747473/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=First+sensor&type=line&yaxis=cm"></iframe></div>
     <div class="w3-half" onclick="opendata2()">
       <h3 class="h3"><b>Second sensor</b></h3>
-      <iframe width="450" height="260" style="border: 3px solid #cccccc;" src="https://thingspeak.com/channels/1747473/charts/2?bgcolor=%23ffffff&color=%23FFD700&dynamic=true&results=60&title=Second+sensor&type=line"></iframe>
+      <iframe width="450" height="260" style="border: 3px solid #cccccc;" src="https://thingspeak.com/channels/1747473/charts/2?bgcolor=%23ffffff&color=%23FFD700&dynamic=true&results=60&title=Second+sensor&type=line&yaxis=cm"></iframe>
       </div>
     <div class="w3-half" onclick="opendata3()">
       <h3 class="h3"><b>Third sensor</b></h3>
-      <iframe width="450" height="260" style="border: 3px solid #cccccc;" src="https://thingspeak.com/channels/1747473/charts/3?bgcolor=%23ffffff&color=%2300FF00&dynamic=true&results=60&title=Third+sensor&type=line"></iframe>
+      <iframe width="450" height="260" style="border: 3px solid #cccccc;" src="https://thingspeak.com/channels/1747473/charts/3?bgcolor=%23ffffff&color=%2300FF00&dynamic=true&results=60&title=Third+sensor&type=line&yaxis=cm"></iframe>
     </div>
     <div class="w3-half" onclick="opendata3()">
       <h3 class="h3"><b>AVG sensor value</b></h3>
@@ -113,7 +113,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </div>
 
 <!-- W3.CSS Container -->
-<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:0px">
+<div class="w3-light-grey w3-container w3-padding-32">
   
   <div class="footer">
     <h4>
@@ -260,7 +260,7 @@ function readThingSpeakData()
     }
     function showmotor(){
      var status = document.getElementById("motorStaus").Value;
-        if (motorStaus == "1" ) {
+        if (staus == "1" ) {
           alert("motor on")
         }
         else {
