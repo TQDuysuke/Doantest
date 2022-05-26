@@ -38,9 +38,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </nav>
 
 <!-- Top menu on small screens -->
-<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding" style="text-align: center;">
   <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
-  <span>Can Tho University</span>
+  <span>HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN MỰC NƯỚC MẶT TRÊN RUỘNG LÚA</span>
 </header>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -52,13 +52,13 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     readThingSpeakData(), writeThingSpeakData()
         },180000);
     setInterval(function(){
-        checkMotor()},3000);
+        checkMotor()},1000);
       
 </script>
   <!-- Header -->
   <div class="w3-container" style="margin-top:0px" id="showcase">
     <form>
-  <div class="w3-main" style="margin-left:400px;margin-right:40px">
+  <div class="w3-main" style="margin-left:400px;margin-right:40px;">
     <div class="h2"> 
       <h1 >HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN MỰC NƯỚC MẶT TRÊN RUỘNG LÚA</h1>
     </div>
@@ -92,8 +92,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   <!-- Services -->
   <div class="w3-main" style="margin-left:400px;margin-right:40px" id="services" >
     <div class="h2"> 
-      <h2 style="margin-right:40px;margin-top:70px">Pump status</h2>
+      <h2 style="text-align: center; margin-top:70px">Pump status</h2>
     </div>
+
     <div class="pumpimg" style="margin-left:400px ;">
       <img id="img" src="pumoff.png" alt=""></img>
     </div>
@@ -107,21 +108,24 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     document.getElementById('img').src = imgs[1];
   }
 </script>
+<div onclick="download1()" style="margin-top: 20px; margin-left: 400px; margin-right: 400px; text-align: center; background-color:  #009999;  color: #fff;">
+  <span class="material-symbols-outlined">
+    file_download <p> Pump on/off history </p>
+    </span>
+  </div>
     </div>
+    
    </div>
   
   <!-- Contact -->
     <div class="w3-main" style="margin-left:400px;margin-right:40px;margin-top:70px" id="contact" >
       <div class="h2"> 
         <h2 onclick="downloadVal()" >Value table download
-          <span class="material-symbols-outlined">
-            file_download
-            </span>
         </h2>
       </div>
       <div onclick="download()" style="text-align: center; background-color: #009999; color: #fff;">
       <span class="material-symbols-outlined">
-        file_download
+        file_download <p>Download here</p>
         </span>
       </div>
   </div>
@@ -171,6 +175,9 @@ function opendata4() {
 }
 function download() {
   open("https://thingspeak.com/channels/1747473/feed.csv")
+}
+function download1() {
+  open("https://thingspeak.com/channels/1747106/feed.csv")
 }
 //
 function checkMotor()
